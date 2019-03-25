@@ -36,6 +36,19 @@
     <ServiceConfiguration Include="ServiceConfiguration.Local.cscfg" />
     <ServiceConfiguration Include="ServiceConfiguration.Cloud.cscfg" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Data-Service-Web-Role\Data-Service-Web-Role.csproj">
+      <Name>Data-Service-Web-Role</Name>
+      <Project>{1fc8c88d-1b39-4d1b-83e9-c115c9b39d67}</Project>
+      <Private>True</Private>
+      <RoleType>Web</RoleType>
+      <RoleName>Data-Service-Web-Role</RoleName>
+      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <DiagnosticsConfiguration Include="Data-Service-Web-RoleContent\diagnostics.wadcfgx" />
+  </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>
     <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
