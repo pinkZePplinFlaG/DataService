@@ -12,11 +12,17 @@ namespace Data_Service_Web_Role
     [ServiceContract]
     public interface IService1
     {
-        [OperationContract]
-        Item GetItemById(int itemId);
+        [WebGet(UriTemplate = "/GetItemByIdJson/{itemId}",
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.Bare)]
+        Item GetItemById(string itemId);
 
-        [OperationContract]
-        Item GetItemByCategory(int categoryId);
+        [WebGet(UriTemplate = "/GetItemByCategoryJson/{categoryId}",
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.Bare)]
+        Item[] GetItemByCategory(string categoryId);
     }
 
 
@@ -25,11 +31,11 @@ namespace Data_Service_Web_Role
     [DataContract]
     public class Item
     {
-        int iD = 0;
+        string iD = "0";
         Category cat = null;
 
         [DataMember]
-        public int ID
+        public string ID
         {
             get { return iD; }
             set { iD = value; }
@@ -46,9 +52,9 @@ namespace Data_Service_Web_Role
     [DataContract]
     public class Category
     {
-        int iD = 0;
+        string iD = "0";
         [DataMember]
-        public int ID
+        public string ID
         {
             get { return iD; }
             set { iD = value; }
