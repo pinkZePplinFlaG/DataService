@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using System.Web.UI;
 
 namespace Data_Service_Web_Role
 {
@@ -12,17 +13,29 @@ namespace Data_Service_Web_Role
     [ServiceContract]
     public interface IService1
     {
-        [WebGet(UriTemplate = "/GetItemByIdJson/{itemId}",
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/GetItemByIdJson/{itemId}",
+        Method ="GET",
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json,
         BodyStyle = WebMessageBodyStyle.Bare)]
         Item GetItemById(string itemId);
 
-        [WebGet(UriTemplate = "/GetItemByCategoryJson/{categoryId}",
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/GetItemByCategoryJson/{categoryId}",
+        Method ="GET",
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json,
         BodyStyle = WebMessageBodyStyle.Bare)]
         Item[] GetItemByCategory(string categoryId);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/SaveNewItem/{itemCatId}/{isDraft}",
+        Method ="POST",
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.Bare)]
+        string SaveNewItem(string itemCatId, string isDraft);
     }
 
 
@@ -33,6 +46,14 @@ namespace Data_Service_Web_Role
     {
         string iD = "0";
         Category cat = null;
+        bool isDraft = false;
+
+        [DataMember]
+        public bool IsDraft
+        {
+            get { return isDraft; }
+            set { isDraft = value; }
+        }
 
         [DataMember]
         public string ID

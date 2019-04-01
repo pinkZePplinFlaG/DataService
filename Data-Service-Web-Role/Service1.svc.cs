@@ -14,35 +14,58 @@ namespace Data_Service_Web_Role
     // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
     public class Service1 : IService1
     {
-        Item[] testItems = new Item[10];
-        Category[] testCategories = new Category[3];
-        private bool initialized = false;
+        static ArrayList testItems = new ArrayList();
+        static Category[] testCategories = new Category[3];
+        static private bool initialized = false;
+        static private int nextId = -1;
         private void InitializeTestItems()
         {
             initialized = true;
             testCategories[0] = new Category();
-            testCategories[0].ID = "0";
+            testCategories[0].ID = "hat";
             testCategories[1] = new Category();
-            testCategories[1].ID = "1";
+            testCategories[1].ID = "shirt";
             testCategories[2] = new Category();
-            testCategories[2].ID = "2";
+            testCategories[2].ID = "shoes";
             for (int i = 0; i < 10; i++)
             {
-                testItems[i] = new Item();
-                testItems[i].ID = i.ToString();
-                testItems[i].Cat = testCategories[i%3];
+                testItems.Add(new Item());
+                ((Item)testItems[i]).ID = GenerateItemId();
+                ((Item)testItems[i]).Cat = testCategories[i % 3];
             }
+        }
+
+        private string GenerateItemId()
+        {
+            nextId++;
+            return nextId.ToString();
+        }
+
+        public string SaveNewItem(string itemCatId, string isDraft)
+        {
+            if (!initialized)
+                InitializeTestItems();
+            Item nItem = new Item();
+            nItem.ID = GenerateItemId();
+            if (isDraft.Equals("true") || isDraft.Equals("True") || isDraft.Equals("TRUE"))
+            {
+                nItem.IsDraft = true;
+            }
+            nItem.Cat = new Category();
+            nItem.Cat.ID = itemCatId;
+            testItems.Add(nItem);
+            return "item saved successfully";
         }
 
         public Item GetItemById(string itemId)
         {
             if (!initialized)
                 InitializeTestItems();
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < testItems.Count; i++)
             {
-                if ((testItems[i].ID).Equals(itemId))
+                if ((((Item)testItems[i]).ID).Equals(itemId))
                 {
-                    return testItems[i];
+                    return (Item)testItems[i];
                 }
             }
             //this code will be used when database is available
@@ -90,14 +113,15 @@ namespace Data_Service_Web_Role
             ArrayList returnItems = new ArrayList();
             if (!initialized)
                 InitializeTestItems();
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < testItems.Count; i++)
             {
-                if ((testItems[i].Cat.ID).Equals(categoryId))
+                if (((Item)testItems[i]).Cat.ID.Equals(categoryId))
                 {
                     returnItems.Add(testItems[i]);
                 }
             }
             return (Item[]) returnItems.ToArray(typeof(Item));
+            //this code will be used when database is available
             /*try
             {
                 SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
@@ -134,7 +158,6 @@ namespace Data_Service_Web_Role
             {
                 Console.WriteLine(e.ToString());
             }*/
-            return new Item[3];//fill this item with data from ItemDB
         }
     }
 }
