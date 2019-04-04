@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
@@ -30,12 +31,11 @@ namespace Data_Service_Web_Role
         Item[] GetItemByCategory(string categoryId);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/SaveNewItem/{itemCatId}/{isDraft}",
-        Method ="POST",
+        [WebInvoke(Method ="POST",
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json,
         BodyStyle = WebMessageBodyStyle.Bare)]
-        string SaveNewItem(string itemCatId, string isDraft);
+        string SaveNewItem(Item jsonItem);
     }
 
 
@@ -44,7 +44,7 @@ namespace Data_Service_Web_Role
     [DataContract]
     public class Item
     {
-        string iD = "0";
+        int iD = 0;
         Category cat = null;
         bool isDraft = false;
 
@@ -56,7 +56,7 @@ namespace Data_Service_Web_Role
         }
 
         [DataMember]
-        public string ID
+        public int ID
         {
             get { return iD; }
             set { iD = value; }
@@ -73,7 +73,7 @@ namespace Data_Service_Web_Role
     [DataContract]
     public class Category
     {
-        string iD = "0";
+        string iD = "none";
         [DataMember]
         public string ID
         {

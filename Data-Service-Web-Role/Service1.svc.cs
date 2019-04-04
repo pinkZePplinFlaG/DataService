@@ -7,6 +7,8 @@ using System.ServiceModel.Web;
 using System.Text;
 using System.Data.SqlClient;
 using System.Collections;
+using System.Runtime.Serialization.Json;
+using System.IO;
 
 namespace Data_Service_Web_Role
 {
@@ -35,25 +37,18 @@ namespace Data_Service_Web_Role
             }
         }
 
-        private string GenerateItemId()
+        private int GenerateItemId()
         {
             nextId++;
-            return nextId.ToString();
+            return nextId;
         }
 
-        public string SaveNewItem(string itemCatId, string isDraft)
+        public string SaveNewItem(Item jsonItem)
         {
             if (!initialized)
                 InitializeTestItems();
-            Item nItem = new Item();
-            nItem.ID = GenerateItemId();
-            if (isDraft.Equals("true") || isDraft.Equals("True") || isDraft.Equals("TRUE"))
-            {
-                nItem.IsDraft = true;
-            }
-            nItem.Cat = new Category();
-            nItem.Cat.ID = itemCatId;
-            testItems.Add(nItem);
+            jsonItem.ID = GenerateItemId();
+            testItems.Add(jsonItem);
             return "item saved successfully";
         }
 
@@ -63,7 +58,7 @@ namespace Data_Service_Web_Role
                 InitializeTestItems();
             for (int i = 0; i < testItems.Count; i++)
             {
-                if ((((Item)testItems[i]).ID).Equals(itemId))
+                if ((((Item)testItems[i]).ID.ToString()).Equals(itemId))
                 {
                     return (Item)testItems[i];
                 }
