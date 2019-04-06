@@ -33,8 +33,7 @@ namespace Data_Service_Web_Role
         [OperationContract]
         [WebInvoke(Method ="POST",
         RequestFormat = WebMessageFormat.Json,
-        ResponseFormat = WebMessageFormat.Json,
-        BodyStyle = WebMessageBodyStyle.Bare)]
+        ResponseFormat = WebMessageFormat.Json)]
         string SaveNewItem(Item jsonItem);
     }
 

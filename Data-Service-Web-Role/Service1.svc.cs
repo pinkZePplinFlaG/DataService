@@ -47,7 +47,7 @@ namespace Data_Service_Web_Role
         {
             if (!initialized)
                 InitializeTestItems();
-            jsonItem.ID = GenerateItemId();
+            //jsonItem.ID = GenerateItemId();
             testItems.Add(jsonItem);
             return "item saved successfully";
         }
