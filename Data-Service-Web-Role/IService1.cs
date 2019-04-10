@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ItemModelDataServiceRep;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -16,11 +17,11 @@ namespace Data_Service_Web_Role
     {
         [OperationContract]
         [WebInvoke(UriTemplate = "/GetItemByIdJson/{itemId}",
-        Method ="GET",
+        Method = "GET",
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json,
         BodyStyle = WebMessageBodyStyle.Bare)]
-        Item GetItemById(string itemId);
+        InventoryItem GetItemById(long itemId);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/GetAllItemsJson/",
@@ -28,64 +29,28 @@ namespace Data_Service_Web_Role
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json,
         BodyStyle = WebMessageBodyStyle.Bare)]
-        Item[] GetAllItemsJson();
+        InventoryItem[] GetAllItemsJson();
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/GetItemByCategoryJson/{categoryId}",
-        Method ="GET",
+        Method = "GET",
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json,
         BodyStyle = WebMessageBodyStyle.Bare)]
-        Item[] GetItemByCategory(string categoryId);
+        InventoryItem[] GetItemByCategory(long categoryId);
 
         [OperationContract]
-        [WebInvoke(Method ="POST",
+        [WebInvoke(Method = "POST",
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json)]
-        string SaveNewItem(Item jsonItem);
-    }
+        string SaveNewItem(InventoryItem jsonItem);
 
-
-    //Data Types needed for app?
-    //Item
-    [DataContract]
-    public class Item
-    {
-        int iD = 0;
-        Category cat = null;
-        bool isDraft = false;
-
-        [DataMember]
-        public bool IsDraft
-        {
-            get { return isDraft; }
-            set { isDraft = value; }
-        }
-
-        [DataMember]
-        public int ID
-        {
-            get { return iD; }
-            set { iD = value; }
-        }
-
-        [DataMember]
-        public Category Cat
-        {
-            get { return cat; }
-            set { cat = value; }
-        }
-    }
-
-    [DataContract]
-    public class Category
-    {
-        string iD = "none";
-        [DataMember]
-        public string ID
-        {
-            get { return iD; }
-            set { iD = value; }
-        }
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/DeleteItemById/{itemId}",
+        Method = "GET",
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.Bare)]
+        string DeleteItemById(long itemId);
     }
 }

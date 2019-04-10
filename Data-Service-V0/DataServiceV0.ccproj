@@ -11,7 +11,7 @@
     <RootNamespace>Data_Service_V0</RootNamespace>
     <AssemblyName>Data_Service_V0</AssemblyName>
     <StartDevelopmentStorage>True</StartDevelopmentStorage>
-    <Name>Data-Service-V0</Name>
+    <Name>DataServiceV0</Name>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -37,20 +37,19 @@
     <ServiceConfiguration Include="ServiceConfiguration.Cloud.cscfg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Data-Service-Web-Role\Data-Service-Web-Role.csproj">
-      <Name>Data-Service-Web-Role</Name>
+    <DiagnosticsConfiguration Include="DataServiceWebRoleContent\diagnostics.wadcfgx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataServiceWebRoleContent" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Data-Service-Web-Role\DataServiceWebRole.csproj">
+      <Name>DataServiceWebRole</Name>
       <Project>{1fc8c88d-1b39-4d1b-83e9-c115c9b39d67}</Project>
       <Private>True</Private>
       <RoleType>Web</RoleType>
-      <RoleName>Data-Service-Web-Role</RoleName>
-      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+      <RoleName>DataServiceWebRole</RoleName>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <DiagnosticsConfiguration Include="Data-Service-Web-RoleContent\diagnostics.wadcfgx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Data-Service-Web-RoleContent\" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>

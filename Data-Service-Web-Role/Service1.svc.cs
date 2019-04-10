@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using System.Collections;
 using System.Runtime.Serialization.Json;
 using System.IO;
+using ItemModelDataServiceRep;
 
 namespace Data_Service_Web_Role
 {
@@ -16,34 +17,75 @@ namespace Data_Service_Web_Role
     // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
     public class Service1 : IService1
     {
-        static ArrayList testItems = new ArrayList();
-        static private bool initialized = false;
-        static private int nextId = -1;
+        static ArrayList testItems = new ArrayList();//"database"
 
-        private int GenerateItemId()
+        public string DeleteItemById(long itemId)
         {
-            nextId++;
-            return nextId;
+            for (int i = 0; i < testItems.Count; i++)
+            {
+                if (((InventoryItem)testItems[i]).Item_Id == itemId)
+                {
+                    testItems.RemoveAt(i);
+                }
+            }
+            //this code will be used when database is available
+            /*try
+            {
+                SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+                //replace these fields with itemDB credentials
+                builder.DataSource = "";//ex: "<server>.database.windows.net";
+                builder.UserID = "";//ex: "<username>";
+                builder.Password = "";//ex: "<password>";
+                builder.InitialCatalog = "";//ex: "<database>";
+
+                using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+                {
+                    connection.Open();//open the connection to the database
+                    StringBuilder sb = new StringBuilder();
+                    //example for how to build query:
+                    //sb.Append("SELECT TOP 20 pc.Name as CategoryName, p.name as ProductName ");
+                    //sb.Append("FROM [SalesLT].[ProductCategory] pc ");
+                    //sb.Append("JOIN [SalesLT].[Product] p ");
+                    //sb.Append("ON pc.productcategoryid = p.productcategoryid;");
+                    String sql = sb.ToString();
+
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Console.WriteLine("{0} {1}", reader.GetString(0), reader.GetString(1));
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.ToString());
+            }*/   
+            return "item deleted successfully";
         }
 
-        public Item[] GetAllItemsJson()
+        public InventoryItem[] GetAllItemsJson()
         {
-            return (Item[])testItems.ToArray(typeof(Item));
+            return (InventoryItem[])testItems.ToArray(typeof(InventoryItem));
         }
 
-        public string SaveNewItem(Item jsonItem)
+        public string SaveNewItem(InventoryItem jsonItem)
         {
             testItems.Add(jsonItem);
             return "item saved successfully";
         }
 
-        public Item GetItemById(string itemId)
+        public InventoryItem GetItemById(long itemId)
         {
             for (int i = 0; i < testItems.Count; i++)
             {
-                if ((((Item)testItems[i]).ID.ToString()).Equals(itemId))
+                if (((InventoryItem)testItems[i]).Item_Id == itemId)
                 {
-                    return (Item)testItems[i];
+                    return (InventoryItem)testItems[i];
                 }
             }
             //this code will be used when database is available
@@ -83,20 +125,20 @@ namespace Data_Service_Web_Role
             {
                 Console.WriteLine(e.ToString());
             }*/
-            return new Item();//fill this item with data from ItemDB
+            return new InventoryItem();//fill this item with data from ItemDB
         }
 
-        public Item[] GetItemByCategory(string categoryId)
+        public InventoryItem[] GetItemByCategory(long categoryId)
         {
             ArrayList returnItems = new ArrayList();
             for (int i = 0; i < testItems.Count; i++)
             {
-                if (((Item)testItems[i]).Cat.ID.Equals(categoryId))
+                if (((InventoryItem)testItems[i]).Category_Id == categoryId)
                 {
                     returnItems.Add(testItems[i]);
                 }
             }
-            return (Item[]) returnItems.ToArray(typeof(Item));
+            return (InventoryItem[]) returnItems.ToArray(typeof(InventoryItem));
             //this code will be used when database is available
             /*try
             {

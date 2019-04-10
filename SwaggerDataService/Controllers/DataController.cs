@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Data_Service_Web_Role;
+using ItemModelDataServiceRep;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SwaggerDataService.Controllers
@@ -11,45 +12,30 @@ namespace SwaggerDataService.Controllers
     [ApiController]
     public class DataController : ControllerBase
     {
-        // GET api/values
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
 
-        // GET api/values/5
         [HttpGet("GetItemById/id")]
-        public ActionResult<Item> Get(int id)
+        public ActionResult<InventoryItem> Get(long id)
         {
-            return new Data_Service_Web_Role.Service1().GetItemById(id.ToString()); 
+            return new Data_Service_Web_Role.Service1().GetItemById(id); 
         }
 
-        // GET api/values/5
         [HttpGet]
-        [Route("GetAll/")]
-        public ActionResult<Item[]> GetAll()
+        [Route("GetAllItems/")]
+        public ActionResult<InventoryItem[]> GetAll()
         {
             return new Data_Service_Web_Role.Service1().GetAllItemsJson();
         }
 
-        // POST api/values
         [HttpPost("SaveNewItem/")]
-        public string Post([FromBody] Item value)
+        public string Post([FromBody] InventoryItem value)
         {
             return new Data_Service_Web_Role.Service1().SaveNewItem(value);
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpDelete("DeleteItemById/{id}")]
+        public string DeleteItem(long id)
         {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            return new Data_Service_Web_Role.Service1().DeleteItemById(id);
         }
     }
 }
