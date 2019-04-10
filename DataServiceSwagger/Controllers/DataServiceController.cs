@@ -11,12 +11,6 @@ namespace DataServiceSwagger.Controllers
 {
     public class DataServiceController : ApiController
     {
-        // GET: api/DataService
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
         // GET: api/DataService/5
         [SwaggerOperation("GetItemById")]
         [SwaggerResponse(HttpStatusCode.OK)]
@@ -25,6 +19,16 @@ namespace DataServiceSwagger.Controllers
         {
             Data_Service_Web_Role.IService1 pxy = new Data_Service_Web_Role.Service1();
             return pxy.GetItemById(id.ToString());
+        }
+
+        // GET: api/DataService/5
+        [SwaggerOperation("GetAllItemsJson")]
+        [SwaggerResponse(HttpStatusCode.OK)]
+        [SwaggerResponse(HttpStatusCode.NotFound)]
+        public Item[] GetAll()
+        {
+            Data_Service_Web_Role.IService1 pxy = new Data_Service_Web_Role.Service1();
+            return pxy.GetAllItemsJson();
         }
 
         // POST: api/DataService

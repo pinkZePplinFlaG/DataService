@@ -17,25 +17,8 @@ namespace Data_Service_Web_Role
     public class Service1 : IService1
     {
         static ArrayList testItems = new ArrayList();
-        static Category[] testCategories = new Category[3];
         static private bool initialized = false;
         static private int nextId = -1;
-        private void InitializeTestItems()
-        {
-            initialized = true;
-            testCategories[0] = new Category();
-            testCategories[0].ID = "hat";
-            testCategories[1] = new Category();
-            testCategories[1].ID = "shirt";
-            testCategories[2] = new Category();
-            testCategories[2].ID = "shoes";
-            for (int i = 0; i < 10; i++)
-            {
-                testItems.Add(new Item());
-                ((Item)testItems[i]).ID = GenerateItemId();
-                ((Item)testItems[i]).Cat = testCategories[i % 3];
-            }
-        }
 
         private int GenerateItemId()
         {
@@ -43,19 +26,19 @@ namespace Data_Service_Web_Role
             return nextId;
         }
 
+        public Item[] GetAllItemsJson()
+        {
+            return (Item[])testItems.ToArray(typeof(Item));
+        }
+
         public string SaveNewItem(Item jsonItem)
         {
-            if (!initialized)
-                InitializeTestItems();
-            //jsonItem.ID = GenerateItemId();
             testItems.Add(jsonItem);
             return "item saved successfully";
         }
 
         public Item GetItemById(string itemId)
         {
-            if (!initialized)
-                InitializeTestItems();
             for (int i = 0; i < testItems.Count; i++)
             {
                 if ((((Item)testItems[i]).ID.ToString()).Equals(itemId))
@@ -106,8 +89,6 @@ namespace Data_Service_Web_Role
         public Item[] GetItemByCategory(string categoryId)
         {
             ArrayList returnItems = new ArrayList();
-            if (!initialized)
-                InitializeTestItems();
             for (int i = 0; i < testItems.Count; i++)
             {
                 if (((Item)testItems[i]).Cat.ID.Equals(categoryId))

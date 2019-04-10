@@ -7,7 +7,7 @@ Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "Data-Service-V0", "Data-Ser
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data-Service-Web-Role", "Data-Service-Web-Role\Data-Service-Web-Role.csproj", "{1FC8C88D-1B39-4D1B-83E9-C115C9B39D67}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataServiceSwagger", "DataServiceSwagger\DataServiceSwagger.csproj", "{1CC2BFEA-3B0B-473A-9FDA-ED10B9BF08F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwaggerDataService", "SwaggerDataService\SwaggerDataService.csproj", "{C8183AB1-A566-4325-AF34-2BCFE4EB8AE4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{1FC8C88D-1B39-4D1B-83E9-C115C9B39D67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1FC8C88D-1B39-4D1B-83E9-C115C9B39D67}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1FC8C88D-1B39-4D1B-83E9-C115C9B39D67}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1CC2BFEA-3B0B-473A-9FDA-ED10B9BF08F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1CC2BFEA-3B0B-473A-9FDA-ED10B9BF08F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1CC2BFEA-3B0B-473A-9FDA-ED10B9BF08F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1CC2BFEA-3B0B-473A-9FDA-ED10B9BF08F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8183AB1-A566-4325-AF34-2BCFE4EB8AE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8183AB1-A566-4325-AF34-2BCFE4EB8AE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8183AB1-A566-4325-AF34-2BCFE4EB8AE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8183AB1-A566-4325-AF34-2BCFE4EB8AE4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

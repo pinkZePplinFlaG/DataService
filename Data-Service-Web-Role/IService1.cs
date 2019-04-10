@@ -23,6 +23,14 @@ namespace Data_Service_Web_Role
         Item GetItemById(string itemId);
 
         [OperationContract]
+        [WebInvoke(UriTemplate = "/GetAllItemsJson/",
+        Method = "GET",
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.Bare)]
+        Item[] GetAllItemsJson();
+
+        [OperationContract]
         [WebInvoke(UriTemplate = "/GetItemByCategoryJson/{categoryId}",
         Method ="GET",
         RequestFormat = WebMessageFormat.Json,
