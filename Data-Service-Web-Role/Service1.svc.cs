@@ -17,17 +17,12 @@ namespace Data_Service_Web_Role
     // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
     public class Service1 : IService1
     {
-        static ArrayList testItems = new ArrayList();//"database"
+        static Dictionary<long, InventoryItem> ITByItemId = new Dictionary<long, InventoryItem>();//"Item Table keyed by ItemId"
+        static Dictionary<long, ArrayList> ITByCatId = new Dictionary<long, ArrayList>();//"Item Table keyed by CatId"
 
         public string DeleteItemById(long itemId)
         {
-            for (int i = 0; i < testItems.Count; i++)
-            {
-                if (((InventoryItem)testItems[i]).Item_Id == itemId)
-                {
-                    testItems.RemoveAt(i);
-                }
-            }
+            ITByItemId.Remove(itemId);
             //this code will be used when database is available
             /*try
             {
@@ -70,24 +65,30 @@ namespace Data_Service_Web_Role
 
         public InventoryItem[] GetAllItemsJson()
         {
-            return (InventoryItem[])testItems.ToArray(typeof(InventoryItem));
+            return ITByItemId.Values.ToArray();
         }
 
         public string SaveNewItem(InventoryItem jsonItem)
         {
-            testItems.Add(jsonItem);
+            ITByItemId.Add(jsonItem.Item_Id, jsonItem);
+            ArrayList test;
+            if (ITByCatId.TryGetValue(jsonItem.Category_Id, out test))
+            {
+                test.Add(jsonItem);
+            }
+            else
+            {
+                ArrayList newCatList = new ArrayList();
+                newCatList.Add(jsonItem);
+                ITByCatId.Add(jsonItem.Category_Id, newCatList);
+            }
+
             return "item saved successfully";
         }
 
         public InventoryItem GetItemById(long itemId)
         {
-            for (int i = 0; i < testItems.Count; i++)
-            {
-                if (((InventoryItem)testItems[i]).Item_Id == itemId)
-                {
-                    return (InventoryItem)testItems[i];
-                }
-            }
+            return ITByItemId[itemId];
             //this code will be used when database is available
             /*try
             {
@@ -125,20 +126,11 @@ namespace Data_Service_Web_Role
             {
                 Console.WriteLine(e.ToString());
             }*/
-            return new InventoryItem();//fill this item with data from ItemDB
         }
 
         public InventoryItem[] GetItemByCategory(long categoryId)
         {
-            ArrayList returnItems = new ArrayList();
-            for (int i = 0; i < testItems.Count; i++)
-            {
-                if (((InventoryItem)testItems[i]).Category_Id == categoryId)
-                {
-                    returnItems.Add(testItems[i]);
-                }
-            }
-            return (InventoryItem[]) returnItems.ToArray(typeof(InventoryItem));
+            return (InventoryItem[])ITByCatId[categoryId].ToArray(typeof(InventoryItem));
             //this code will be used when database is available
             /*try
             {
